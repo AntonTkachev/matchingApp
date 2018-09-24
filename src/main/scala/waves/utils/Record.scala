@@ -2,17 +2,19 @@ package waves.utils
 
 import java.io.{File, PrintWriter}
 
-import waves.models.ClientsInfo
+import waves.models.Client
 
 class Record {
-  def toFile(fileName: String, accounts: Map[String, ClientsInfo]): Unit = {
-    val strings = accounts.map { case (name, client) =>
-      s"$name ${client.dollarsBalance} ${client.countA} ${client.countB} ${client.countC} ${client.countB}"
-    }
-
+  /**
+    * @param fileName - name file where write result clients info
+    * @param clients  - list with [[Client's]] where each element transform to string
+    */
+  def writeToFile(fileName: String, clients: List[Client]): Unit = {
+    val line = clients.sortBy(_.name)
+      .map(client => s"${client.name} ${client.dollarsBalance} ${client.A} ${client.B} ${client.C} ${client.D}")
     val pw = new PrintWriter(new File(fileName))
 
-    pw.write(strings mkString "\n")
+    pw.write(line.mkString("\n"))
     pw.close()
   }
 }
