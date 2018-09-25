@@ -19,10 +19,12 @@ class Write {
   /**
     * @return all clients for precessing
     */
-  def getClients: List[Client] = parseFiles(Meta.clientsFilesName).map(line => new Client(line.split("\t")))
+  def getClients(pathToFile: Option[String] = None): List[Client] =
+    parseFiles(pathToFile.getOrElse(Meta.clientsFilesName)).map(line => new Client(line.split("\t")))
 
   /**
     * @return all orders for precessing
     */
-  def getOrders: List[Order] = parseFiles(Meta.ordersFilesName).map(line => new Order(line.split("\t")))
+  def getOrders(pathToFile: Option[String] = None): List[Order] =
+    parseFiles(pathToFile.getOrElse(Meta.ordersFilesName)).map(line => new Order(line.split("\t")))
 }

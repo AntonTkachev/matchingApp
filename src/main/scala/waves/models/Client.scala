@@ -38,9 +38,12 @@ case class Client(name: String, dollarsBalance: Int, A: Int, B: Int, C: Int, D: 
     * @param order - order for this client
     * @return [[Client]] after all transformations
     */
-  def transformByOrder(order: Order): Client =
-    order.dealType match {
-      case Meta.Buy  => changeClientCurrencyType(order, plus, minus)
-      case Meta.Sell => changeClientCurrencyType(order, minus, plus)
-    }
+  def transformByOrder(order: Order): Client = {
+    if (order.count > 0) {
+      order.dealType match {
+        case Meta.Buy => changeClientCurrencyType(order, plus, minus)
+        case Meta.Sell => changeClientCurrencyType(order, minus, plus)
+      }
+    } else this
+  }
 }
