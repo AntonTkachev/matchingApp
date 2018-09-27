@@ -1,16 +1,15 @@
 package waves
 
-import waves.utils.{Meta, Record, Write}
+import waves.utils.{Constants, FileUtils}
 
 object Main {
-  private val record = new Record()
-  private val write = new Write()
+  private val utils = new FileUtils()
 
   def main(args: Array[String]): Unit = {
-    val ordersByClient = write.getOrders().groupBy(_.name)
-    val newClients = write.getClients().map(client =>
+    val ordersByClient = utils.getOrders().groupBy(_.name)
+    val newClients = utils.getClients().map(client =>
       ordersByClient(client.name)
         .foldLeft(client) { (resultClient, order) => resultClient.transformByOrder(order) })
-    record.writeToFile(Meta.resultFilesName, newClients)
+    utils.writeToFile(Constants.Paths.DefaultResultStore, newClients)
   }
 }

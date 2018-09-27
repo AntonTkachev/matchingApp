@@ -1,13 +1,13 @@
 package waves.models
 
 import org.scalatest.{FlatSpec, Matchers}
-import waves.utils.Write
+import waves.utils.FileUtils
 
 class ClientSpec extends FlatSpec with Matchers {
-  private val write = new Write()
+  private val utils = new FileUtils()
 
   it should "process order which nothing change" in {
-    val ordersByClient = write.getOrders(Option("/orderForOneClient.txt")).groupBy(_.name)
+    val ordersByClient = utils.getOrders("/orderForOneClient.txt").groupBy(_.name)
     val client = List(Client("C1", 0, 0, 0, 0, 0))
     val newClients = client.map(client =>
       ordersByClient(client.name)
